@@ -9,7 +9,7 @@ export default class Form extends Component {
         this.store = store
     }
 
-    events () {
+    events () { 
         const formElement = document.querySelector('.js-form');
         const inputElement = document.querySelector('#new-item-field');
 
@@ -27,17 +27,32 @@ export default class Form extends Component {
         });
     }
 
-    render(state, actions, mutations) {
+    alertar (e) {
+        console.log(e.target.value)
+    }
 
-        setTimeout(()=> {
+    render(state, actions, mutations) {
+        if(this.element) {
+            console.log(this.element)
             this.events()
-        },1000)
+        }
+
+        setTimeout(() => {
+            var elementx = this.element.querySelectorAll('[click]')
+            elementx.forEach(element => {
+                element.addEventListener('click', (e) => {
+                    this[e.target.getAttribute('click')](e)
+                })
+
+            })
+        }, 2000)
 
         return /*html*/`
             <div class="boilerform">
+                <p class="teste">xxx</p>
                 <!-- Form styles from the https://boilerform.design boilerplate -->
                 <label for="new-item-field" class="[ new-item__label ] [ c-label ]">Add a new item</label>
-                <input type="text" class="[ new-item__details ] [ c-input-field ]" id="new-item-field" autocomplete="off" />
+                <input type="text" value="teste" click="alertar" class="[ new-item__details ] [ c-input-field ]" id="new-item-field" autocomplete="off" />
                 <button class="[ c-button ] [ new-item__button ]">Save</button>
             </div>
           `
