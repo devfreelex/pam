@@ -23,12 +23,12 @@ export default class Form extends Component {
     }
 
     render(state, actions, mutations) {
-
+        if(!state || !state.users) return
         return /*html*/`
             <div class="header">
                 <h1 class="header__logo"> Amigo Secreto</h1>
                 <p class="header__resume">
-                    Cadastrados: <span class="header__tag">10</span> 
+                    Cadastrados: <span class="header__tag">${state.users.length}</span> 
                 </p>
             </div>
           `

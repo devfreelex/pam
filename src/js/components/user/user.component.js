@@ -10,6 +10,17 @@ export default class Form extends Component {
         this.store = store
     }
 
+    edit (e) {
+        e.preventDefault()
+        console.log('edit-->', e.target)
+    }
+
+    remove (e) {
+        e.preventDefault()
+        const {userId} = e.target.dataset
+        this.store.dispatch('clearItem', { id: userId })
+    }
+
 
     save(e) {
         e.preventDefault()
@@ -34,12 +45,12 @@ export default class Form extends Component {
                         <div class="user__container">
                             <div class="user__img">&#x1F9D1</div>
                             <div class="user__info">
-                                <div class="user__name">Rodrigo Rocha</div>
-                                <div class="user__email">rodrigo.teste@mail.com</div>
+                                <div class="user__name">${user.name}</div>
+                                <div class="user__email">${user.email}</div>
                             </div>
                             <div class="user__controls">
-                                <button class="user__button user--edit">Editar</button>
-                                <button class="user__button user--remove">Remover</button>
+                                <button class="user__button user--edit" data-user-id="${user._id}" click="edit">Editar</button>
+                                <button class="user__button user--remove" data-user-id="${user._id}" click="remove">Remover</button>
                             </div>
                         </div>
                     </div>                  

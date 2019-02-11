@@ -1,5 +1,5 @@
 import Component from '../../lib/component.js'
-import {bindElement} from '../../directives/bind.js'
+import { bindElement } from '../../directives/bind.js'
 
 export default class Form extends Component {
     constructor(store) {
@@ -13,39 +13,42 @@ export default class Form extends Component {
     }
 
 
-    hideRegister (e) { 
-        e.preventDefault()        
-         const { form } = bindElement(this)
-         form.classList.toggle('register--hidden')
+    hideRegister(e) {
+        e.preventDefault()
+        const toggleClass = 'register--hidden'
+        const { form } = bindElement(this)
+        form.classList.remove(toggleClass)
     }
 
-    nameValidate (e) {
+    nameValidate(e) {
         const { name, btnSave } = bindElement(this)
-        const {value} = e.target
+        const { value } = e.target
         const minNameLength = 3
+        const inputValid = 'input--valid'
+        const inputInvalid = 'input--invalid'
         this.isInvalidName = name.value.length < minNameLength
-        
-        if(this.isInvalidName === true) {
-            name.classList.remove('input--valid')
-            name.classList.add('input--invalid')
+
+        if (this.isInvalidName === true) {
+            name.classList.remove(inputValid)
+            name.classList.add(inputInvalid)
             btnSave.setAttribute('disabled', true)
             return
         }
 
-        name.classList.remove('input--invalid')
-        name.classList.add('input--valid')  
-        if(this.isInvalidEmail === false && this.isInvalidName === false) {
-            btnSave.removeAttribute('disabled')  
+        name.classList.remove(inputInvalid)
+        name.classList.add(inputValid)
+        if (this.isInvalidEmail === false && this.isInvalidName === false) {
+            btnSave.removeAttribute('disabled')
         }
     }
 
-    emailValidate (e) {
+    emailValidate(e) {
         const { email, btnSave } = bindElement(this)
-        const {value} = e.target
+        const { value } = e.target
         const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-        this.isInvalidEmail = reg.test(email.value) !== true 
+        this.isInvalidEmail = reg.test(email.value) !== true
 
-        if(this.isInvalidEmail === true) {
+        if (this.isInvalidEmail === true) {
             email.classList.remove('input--valid')
             email.classList.add('input--invalid')
             btnSave.setAttribute('disabled', true)
@@ -54,16 +57,24 @@ export default class Form extends Component {
 
         email.classList.remove('input--invalid')
         email.classList.add('input--valid')
-        if(this.isInvalidEmail === false && this.isInvalidName === false) {
-            btnSave.removeAttribute('disabled')  
+        if (this.isInvalidEmail === false && this.isInvalidName === false) {
+            btnSave.removeAttribute('disabled')
         }
-        
+
     }
 
-    save (e) { 
+    idGenerator() {
+        const min = Math.ceil(1);
+        const max = Math.floor(60000);
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    save(e) {
         e.preventDefault()
         const { name, email } = bindElement(this)
-        this.store.dispatch('addItem', {name: name.value, email: email.value});
+        this.store.dispatch('addItem', { name: name.value, email: email.value, _id: this.idGenerator() });
+        name.value = ''
+        email.value = ''
     }
 
     render(state, actions, mutations) {
@@ -71,9 +82,9 @@ export default class Form extends Component {
         return /*html*/`
                 <h2 class="component__title"> 
                     <span class="component__title__tag">Cadastro</span>
-                    <button class="component__toggle" click="hideRegister">Ocultar</button>
+                    <button class="component__toggle" click="hideRegister">Novo</button>
                 </h2>
-                <form action="" class="register__form" data-bind="form">
+                <form action="" class="register__form register--hidden" data-bind="form">
                     <label for="" class="register__form__label grid grid-3">
                         <span class="register__form__title">Nome</span>
                         <input type="text" class="register__form--input" keyup="nameValidate" data-bind="name">
@@ -87,6 +98,6 @@ export default class Form extends Component {
                     </div>
                 </form>
           `
-    }    
+    }
 
 }

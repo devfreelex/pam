@@ -35,7 +35,8 @@ export default class Store {
         }) || {}
     }
 
-    dispatch(actionKey, payload) {
+    dispatch(actionKey, payload) { 
+        if(!payload) return
         if(typeof this.actions[actionKey] !== 'function') { 
             console.error(`Action ${actionKey} doesn't exist.`)
             return false
