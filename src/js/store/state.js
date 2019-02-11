@@ -1,6 +1,5 @@
 export default {
-    items: [
-      'I made this',
-      'Another thing'
+    users: [
+      {name: 'Rodrigo', email: 'rodrigo@email.com'},
     ]
   };

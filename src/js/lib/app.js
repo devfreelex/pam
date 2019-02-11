@@ -33,7 +33,7 @@ export default class App {
         const { components } = config
         const keys = Object.keys(components)
         this.components = keys.map( comonentName => { 
-            return new components[comonentName](config.store || {teste:true})
+            return new components[comonentName](config.store || {})
         }) || {}
     }
 }
