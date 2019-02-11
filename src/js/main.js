@@ -1,17 +1,16 @@
 import App from './lib/app.js'
 import store from './store/index.js'; 
 
-import Count from './components/count.js';
-import List from './components/list.js';
-import Status from './components/status.js';
-import Form from './components/form.js'
+import headerComponent from './components/header/header.component.js';
+import registerComponent from './components/register/register.component.js';
+import userComponent from './components/user/user.component.js';
+
 
   const app = new App({
       store,
       components:{
-        Count,
-        List,
-        Status,
-        Form
+        headerComponent,
+        registerComponent,
+        userComponent
       }
   })
