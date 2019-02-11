@@ -74,7 +74,7 @@
     padding-bottom:15px;
 }
 .register__form {
-    height:100px;
+    height:auto;
     opacity: 1;
     transition: .3s
 }

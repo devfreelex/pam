@@ -91,7 +91,7 @@ export default class Form extends Component {
                     </label>
                     <label for="" class="register__form--label grid grid-3">
                         <span class="register__form__title">E-mail</span>
-                        <input type="text" class="register__form--input" keyup="emailValidate" data-bind="email">
+                        <input type="email" class="register__form--input" keyup="emailValidate" data-bind="email">
                     </label>
                     <div class="register__form__label grid grid-3">
                         <button class="register__button button--disabled" click="save" data-bind="btnSave" disabled>Salvar</button>
