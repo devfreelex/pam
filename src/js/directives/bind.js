@@ -1,4 +1,5 @@
-export const bindElement = (context) => {
+
+export const bindElement = (context) => { console.log('called')
     const dataBind = {}
     const elements = context.element.querySelectorAll('[data-bind]')
     elements.forEach( element => {
@@ -8,4 +9,15 @@ export const bindElement = (context) => {
     })
 
     return dataBind
+}
+
+const elementBind =  (context) => {
+    const elementBind = {}
+    const { elements } = context
+    
+    elements.forEach( element => {
+        elementBind = element.getAttribute('data-bind')
+    })
+
+    return {}
 }

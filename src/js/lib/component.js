@@ -1,26 +1,24 @@
 import Store from '../store/store.js'
 import defaultDirectives from '../directives/default.js'
-
 export default class Component {
     constructor(props = {}) {
         this.setRender(props)
-        this.setDirectives()
         this.setStateSubscriber(props)
         this.setComponentElement(props)
+        this.setDirectives()
     }
 
     setRender(props) {
         const { state, actions, mutations } = props.store
         if (typeof this.render === 'function') {
-            this.templateRender = this.render.bind(this, state, actions, mutations)
-            props.element.innerHTML = this.templateRender()
+            props.element.innerHTML = this.render(state, actions, mutations)
             return this
         }
         throw new Error('this.render is not a function and it must be.')
     }
 
-    setDirectives() {
-        this.directives = defaultDirectives.init(this)
+    setDirectives() { 
+        defaultDirectives.init(this)
     }
 
     setComponentElement(props) {

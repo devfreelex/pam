@@ -1,9 +1,10 @@
 const init = (context) => {
     setTimeout(() => {
         const click = context.element.querySelectorAll('[click]')
-        click.forEach(element => {
-            element.addEventListener('click', (e) => {
-                return context[e.target.getAttribute('click')](e)
+        click.forEach((element, index) => {
+            let elementx = click[index]
+            elementx.addEventListener('click', (e) => {
+                context[e.target.getAttribute('click')](e)
             })
         })
 
@@ -27,7 +28,7 @@ const init = (context) => {
                 context[e.target.getAttribute('keydown')](e)
             })
         })
-        
+
         const keyup = context.element.querySelectorAll('[keyup]')
         keyup.forEach(element => {
             element.addEventListener('keyup', (e) => {

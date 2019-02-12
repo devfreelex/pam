@@ -10,14 +10,22 @@ export default class Form extends Component {
         this.store = store
         this.isInvalidName
         this.isInvalidEmail
+        this.bindForm = 0
     }
 
 
-    hideRegister(e) {
+    hideRegister(e) { 
         e.preventDefault()
         const toggleClass = 'register--hidden'
         const { form } = bindElement(this)
-        form.classList.remove(toggleClass)
+        if(this.bindForm < 1) {
+            this.bindForm = this.bindForm + 1
+            form.classList.toggle(toggleClass)
+        }
+        setTimeout(() => {
+            console.log('bind', this.bindForm)
+            this.bindForm = 0
+        },100)
     }
 
     nameValidate(e) {

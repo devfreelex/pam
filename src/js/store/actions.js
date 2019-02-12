@@ -2,7 +2,7 @@ export default {
     addItem(context, payload) {
       context.commit('addItem', payload);
     },
-    clearItem(context, payload) { console.log('action', payload)
+    clearItem(context, payload) { 
       context.commit('clearItem', payload);
     }
   };

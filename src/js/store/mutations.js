@@ -6,7 +6,6 @@ export default {
     },
     clearItem(state, payload) {
       state.users = state.users.filter( user => {
-        console.log(parseInt(user._id) !== parseInt(payload.id))
         if(parseInt(user._id) !== parseInt(payload.id)) return user
       })
   
