@@ -23,7 +23,6 @@ export default class Form extends Component {
             form.classList.toggle(toggleClass)
         }
         setTimeout(() => {
-            console.log('bind', this.bindForm)
             this.bindForm = 0
         },100)
     }
