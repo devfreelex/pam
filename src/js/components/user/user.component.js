@@ -1,5 +1,6 @@
 import Component from '../../lib/component.js'
 import { bindElement } from '../../directives/bind.js'
+import { event } from '../../lib/event.js';
 
 export default class Form extends Component {
     constructor(store) {
@@ -12,25 +13,14 @@ export default class Form extends Component {
 
     edit (e) {
         e.preventDefault()
-        console.log('edit-->', e.target)
+        const {userId} = e.target.dataset
+        event.publish('editUser', { userId })
     }
 
     remove (e) {
         e.preventDefault()
         const {userId} = e.target.dataset
         this.store.dispatch('clearItem', { id: userId })
-    }
-
-
-    save(e) {
-        e.preventDefault()
-        const { item } = bindElement(this)
-
-        if (item.value.length) {
-            this.store.dispatch('addItem', item.value);
-            item.value = '';
-            item.focus();
-        }
     }
 
     render(state, actions, mutations) {

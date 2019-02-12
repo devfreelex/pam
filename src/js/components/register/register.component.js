@@ -1,6 +1,6 @@
 import Component from '../../lib/component.js'
 import { bindElement } from '../../directives/bind.js'
-
+import { event } from '../../lib/event.js'
 export default class Form extends Component {
     constructor(store) {
         super({
@@ -11,20 +11,75 @@ export default class Form extends Component {
         this.isInvalidName
         this.isInvalidEmail
         this.bindForm = 0
+        this.update()
+        this.showRegister()
     }
 
+    update() {
+        event.subscribe('editUser', data => {
+            const { users } = this.store.state
+            const { name, email } = bindElement(this)
+            const user = users.find(user => {
+                if (user._id === parseInt(data.userId)) {
+                    return user
+                }
+            })
+            email.value = user.email
+            name.value = user.name
+            this.user = user
+        })
+    }
 
-    hideRegister(e) { 
+    save(e) {
+        e.preventDefault()
+
+        const { name, email } = bindElement(this)
+        if (!this.hasUser()) {
+            this.store.dispatch('addItem', { name: name.value, email: email.value, _id: this.idGenerator() });
+            name.value = ''
+            email.value = ''
+            return
+        }
+        name.value = this.user.name
+        email.value = this.user.email
+        this.store.dispatch('updateItem', this.user);
+        delete this.user
+    }
+
+    toggleRegister(e) {
         e.preventDefault()
         const toggleClass = 'register--hidden'
         const { form } = bindElement(this)
-        if(this.bindForm < 1) {
+        if (this.bindForm < 1) {
             this.bindForm = this.bindForm + 1
             form.classList.toggle(toggleClass)
         }
         setTimeout(() => {
             this.bindForm = 0
-        },100)
+        }, 100)
+
+    }
+
+    showRegister () {
+        event.subscribe('editUser', () => {
+            const showClass = 'register--hidden'
+            const { form } = bindElement(this)
+            if (this.bindForm < 1) { 
+                this.bindForm = this.bindForm + 1
+                if(form.classList.contains(showClass)) {
+                    form.classList.remove(showClass)
+                }
+            }
+            setTimeout(() => {
+                this.bindForm = 0
+            }, 100)
+        })
+    }
+    
+    setData (prop, value) {
+        if(this.user && this._id !== '') {
+            this.user[prop] = value
+        }
     }
 
     nameValidate(e) {
@@ -39,11 +94,13 @@ export default class Form extends Component {
             name.classList.remove(inputValid)
             name.classList.add(inputInvalid)
             btnSave.setAttribute('disabled', true)
+            this.setData('name', name.value)
             return
         }
 
         name.classList.remove(inputInvalid)
         name.classList.add(inputValid)
+        this.setData('name', name.value)
         if (this.isInvalidEmail === false && this.isInvalidName === false) {
             btnSave.removeAttribute('disabled')
         }
@@ -59,11 +116,13 @@ export default class Form extends Component {
             email.classList.remove('input--valid')
             email.classList.add('input--invalid')
             btnSave.setAttribute('disabled', true)
+            this.setData('email', email.value)
             return
         }
 
         email.classList.remove('input--invalid')
         email.classList.add('input--valid')
+        this.setData('email', email.value)
         if (this.isInvalidEmail === false && this.isInvalidName === false) {
             btnSave.removeAttribute('disabled')
         }
@@ -76,12 +135,8 @@ export default class Form extends Component {
         return Math.floor(Math.random() * (max - min)) + min;
     }
 
-    save(e) {
-        e.preventDefault()
-        const { name, email } = bindElement(this)
-        this.store.dispatch('addItem', { name: name.value, email: email.value, _id: this.idGenerator() });
-        name.value = ''
-        email.value = ''
+    hasUser() {
+        return this.user && this.user.name !== '' && this.user.email !== ''
     }
 
     render(state, actions, mutations) {
@@ -89,7 +144,7 @@ export default class Form extends Component {
         return /*html*/`
                 <h2 class="component__title"> 
                     <span class="component__title__tag">Cadastro</span>
-                    <button class="component__toggle" click="hideRegister">Novo</button>
+                    <button class="component__toggle" click="toggleRegister">Novo</button>
                 </h2>
                 <form action="" class="register__form register--hidden" data-bind="form">
                     <label for="" class="register__form__label grid grid-3">
