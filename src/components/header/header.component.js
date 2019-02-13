@@ -1,4 +1,4 @@
-import Component from '../../lib/component.js'
+import Component from '../../../lib/component.js'
 
 export default class Form extends Component {
     constructor(store) {

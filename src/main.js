@@ -1,4 +1,4 @@
-import App from './lib/app.js'
+import App from '../lib/app.js'
 import store from './store/index.js'; 
 
 import headerComponent from './components/header/header.component.js';
