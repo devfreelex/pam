@@ -104,7 +104,7 @@ Next we export a new class that, when informed as dependency for App, will be in
 
 See also, that the FORM component depends on a store instance to render components as soon as the state changes. So the next step is to create the store from which App and Component depends.
 
-Dentro da diretório src na pasta store crie os arquivos index.js, state.js, actions.js, mutations.js e store.js
+Within the src directory in the store folder create the index.js, state.js, actions.js, mutations.js, and store.js files.
 
 The files will look like this:
 
@@ -175,7 +175,7 @@ export default new Store({
 
 Note that after instantiating the Store class, we pass into it the dependencies of state.js, mutations.js, and actions.js
 
-Finally, we need to import the index.js file containing the data store from the main.js file.
+To finalize the data store, we need to import the index.js file containing the data store from the main.js file.
 
 The main.js file looks like this:
 
@@ -197,4 +197,72 @@ import userComponent from './components/user/user.component.js';
       }
   })
 
+```
+
+Observe que headerComponent e userComponent foram importados e insridos na construção da instancia da classe App. Porém, os arquivos contendo esses componentes não existem ainda. Precisamos criá-los dentro da pasta componente.
+
+Primeiro crie 2 pastas, header e user dentro do diretório components.
+
+Dentro da pasta header crie o arquivo header.component.js e 
+na pasta user o arquivo user.component.js.
+
+Esses arquivos ficarão assim:
+
+**header.component.js**
+
+```
+import Component from '../../lib/component.js'
+
+export default class Form extends Component {
+    constructor(store) {
+        super({
+            store,
+            element: document.querySelector('header-component')
+        })
+        this.store = store
+    }
+
+    render(state, actions, mutations) {
+        if(!state || !state.users) return
+        return /*html*/`
+            <div class="header">
+                <h1 class="header__logo"> Cadastro de usuários</h1>
+                <p class="header__resume">
+                    Cadastrados: <span class="header__tag">${state.users.length}</span> 
+                </p>
+            </div>
+          `
+    }    
+
+}
+
+```
+
+**user.component.js**
+
+```
+import Component from '../../lib/component.js'
+
+export default class Form extends Component {
+    constructor(store) {
+        super({
+            store,
+            element: document.querySelector('header-component')
+        })
+        this.store = store
+    }
+
+    render(state, actions, mutations) {
+        if(!state || !state.users) return
+        return /*html*/`
+            <div class="header">
+                <h1 class="header__logo"> Cadastro de usuários</h1>
+                <p class="header__resume">
+                    Cadastrados: <span class="header__tag">${state.users.length}</span> 
+                </p>
+            </div>
+          `
+    }    
+
+}
 ```
