@@ -1,5 +1,4 @@
 import Component from '../../lib/component.js'
-import { bindElement } from '../../directives/bind.js'
 import { event } from '../../lib/event.js';
 
 export default class Form extends Component {
@@ -46,8 +45,6 @@ export default class Form extends Component {
                     </div>                  
                 `
             }).join('')}
-                                                                        
         `
     }
-
 }

@@ -1,5 +1,5 @@
 import Store from '../store/store.js'
-import defaultDirectives from '../directives/default.js'
+import defaultDirectives from './default.js'
 export default class Component {
     constructor(props = {}) {
         this.setRender(props)
