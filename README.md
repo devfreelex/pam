@@ -265,3 +265,28 @@ export default class Form extends Component {
 
 }
 ```
+
+Finally, we can include main.js inside index.html through the script tag using the type property that tells the browser that what is being imported is an es6 + module and that it may possibly import other modules.
+
+That way, the application will work properly since the browser will intelligently load all the modules.
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/global.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+</head>
+<body>
+    <header-component class="header"></header-component>
+    <register-component class="register"></register-component>
+    <user-component class="user"></user-component>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
+
+```
