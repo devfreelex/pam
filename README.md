@@ -11,39 +11,40 @@ With the advancements of the JavaScript language (ECMA SCRIPT), many of the depe
 > Now be careful if you develop a system to put into production, because the micro-library is still in the first stage of development and may contain unidentified bugs.
 
 ## Introdution
----
 
 To get started with PAM, you need to know the basics of OO (OBJECT ORIENTATION). So you still have not got it, study a little more about it and come back here later.
 
 Below we have the basic structure of an app built with PAM.
 
 ```
+lib
 src
 |---assets
-|-----global.css
-|-----reset.css
+|   |--css
+|      |--global.css
+|      |--reset.css
 |
-|---core
 |---components
-|-----your componts
+|   |--your componts
 |
 |---directives
-|-----your directives
+|   |--your directives
 |
 |---services
-|-----your services
+|   |--your services
 |
 |---helpers
-|-----your helpers
+|   |--your helpers
 |
 |---validators
-|-----your validators
+|   |--your validators
 |
 |---store
-|-----index
-|-----state
-|-----actions
-|-----mutations
+|   |--index
+|   |--state
+|   |--actions
+|   |--mutations
+|
 main.js
 index.html
 ```
