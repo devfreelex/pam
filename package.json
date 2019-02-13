@@ -1,0 +1,23 @@
+{
+  "name": "pam",
+  "version": "1.0.0",
+  "description": "PAM is a set of simple programming patterns combined to promote the construction of reactive web applications.",
+  "main": "main.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev":"http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devfreelex/pam.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devfreelex/pam/issues"
+  },
+  "homepage": "https://github.com/devfreelex/pam#readme"
+}

@@ -12,9 +12,15 @@ With the advancements of the JavaScript language (ECMA SCRIPT), many of the depe
 
 ## Introdution
 
-To get started with PAM, you need to know the basics of OO (OBJECT ORIENTATION). So you still have not got it, study a little more about it and come back here later.
+To get started with PAM.js, you need to know the basics of OO (OBJECT ORIENTATION). So if you still do not understand OO, study a little more about it and come back here later.
 
-Below we have the basic structure of an app built with PAM.
+At this stage of development, PAM is served by http-server, a static server that you can install globally via npm through the command:
+
+npm install http-server -g
+
+If you're going to start joking now, do this installation.
+
+Below we have the basic structure of an application built with PAM.
 
 ```
 lib
@@ -47,6 +53,9 @@ src
 |
 main.js
 index.html
+package.json
+.eslintrc
+.gitignore
 ```
 ### **Get Started**
 ---
