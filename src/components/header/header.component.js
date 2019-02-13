@@ -4,7 +4,7 @@ export default class Form extends Component {
     constructor(store) {
         super({
             store,
-            element: document.querySelector('header-component')
+            element: 'header-component'
         })
         this.store = store
     }

@@ -5,7 +5,7 @@ export default class Form extends Component {
     constructor(store) {
         super({
             store,
-            element: document.querySelector('user-component')
+            element: 'user-component'
         })
         this.store = store
     }

@@ -5,7 +5,7 @@ export default class Form extends Component {
     constructor(store) {
         super({
             store,
-            element: document.querySelector('register-component')
+            element: 'register-component'
         })
         this.store = store
         this.isInvalidName
