@@ -1,4 +1,4 @@
-import Store from '../store/store.js'
+import Store from './store.js'
 import defaultDirectives from './default.js'
 export default class Component {
     constructor(props = {}) {
