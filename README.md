@@ -199,14 +199,13 @@ import userComponent from './components/user/user.component.js';
 
 ```
 
-Observe que headerComponent e userComponent foram importados e insridos na construção da instancia da classe App. Porém, os arquivos contendo esses componentes não existem ainda. Precisamos criá-los dentro da pasta componente.
+Note that headerComponent and userComponent were imported and entered into the instance construction of the App class. However, the files containing these components do not yet exist. We need to create them inside the component folder.
 
-Primeiro crie 2 pastas, header e user dentro do diretório components.
+First create 2 folders, header and user within the components directory.
 
-Dentro da pasta header crie o arquivo header.component.js e 
-na pasta user o arquivo user.component.js.
+Inside the header folder create the file header.component.js and in the user folder the file user.component.js.
 
-Esses arquivos ficarão assim:
+These files look like this:
 
 **header.component.js**
 
