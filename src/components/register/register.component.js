@@ -50,23 +50,17 @@ export default class Form extends Component {
         e.preventDefault()
         const toggleClass = 'register--hidden'
         const { form } = bindElement(this)
-        if (this.bindForm < 1) {
-            this.bindForm = this.bindForm + 1
-            form.classList.toggle(toggleClass)
-        }
-        setTimeout(() => {
-            this.bindForm = 0
-        }, 100)
-
+        this.bindForm = this.bindForm + 1
+        form.classList.toggle(toggleClass)
     }
 
-    showRegister () {
+    showRegister() {
         event.subscribe('editUser', () => {
             const showClass = 'register--hidden'
             const { form } = bindElement(this)
-            if (this.bindForm < 1) { 
+            if (this.bindForm < 1) {
                 this.bindForm = this.bindForm + 1
-                if(form.classList.contains(showClass)) {
+                if (form.classList.contains(showClass)) {
                     form.classList.remove(showClass)
                 }
             }
@@ -75,9 +69,9 @@ export default class Form extends Component {
             }, 100)
         })
     }
-    
-    setData (prop, value) {
-        if(this.user && this._id !== '') {
+
+    setData(prop, value) {
+        if (this.user && this._id !== '') {
             this.user[prop] = value
         }
     }
