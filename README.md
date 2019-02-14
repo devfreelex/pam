@@ -16,7 +16,9 @@ To get started with PAM.js, you need to know the basics of OO (OBJECT ORIENTATIO
 
 At this stage of development, PAM is served by http-server, a static server that you can install globally via npm through the command:
 
-npm install http-server -g
+`npm install http-server -g`
+
+To run the application use the `npm run dev` command.
 
 If you're going to start joking now, do this installation.
 
