@@ -1,6 +1,9 @@
 import Component from '../../../lib/component.js'
 import { bindElement } from '../../../lib/bind.js'
 import { event } from '../../../lib/event.js'
+
+import nameValidator from '../../validators/name.validator.js'
+import emailValidator from '../../validators/email.validator.js'
 export default class Form extends Component {
     constructor(store) {
         super({
@@ -13,6 +16,7 @@ export default class Form extends Component {
         this.bindForm = 0
         this.update()
         this.showRegister()
+        this.validateForm()
     }
 
     update() {
@@ -30,20 +34,30 @@ export default class Form extends Component {
         })
     }
 
+    resetForm (name, email) {
+        
+        this.isFormValid = false
+        this.isNameValid = false
+        this.isEmailValid = false
+
+        name.value = ''
+        email.value = ''
+        delete this.user
+    }
+
     save(e) {
         e.preventDefault()
 
         const { name, email } = bindElement(this)
         if (!this.hasUser()) {
             this.store.dispatch('addItem', { name: name.value, email: email.value, _id: this.idGenerator() });
-            name.value = ''
-            email.value = ''
+            this.resetForm(name, email)
             return
         }
         name.value = this.user.name
         email.value = this.user.email
         this.store.dispatch('updateItem', this.user);
-        delete this.user
+        this.resetForm(name, email)
     }
 
     toggleRegister(e) {
@@ -77,50 +91,54 @@ export default class Form extends Component {
     }
 
     nameValidate(e) {
-        const { name, btnSave } = bindElement(this)
-        const { value } = e.target
-        const minNameLength = 3
-        const inputValid = 'input--valid'
-        const inputInvalid = 'input--invalid'
-        this.isInvalidName = name.value.length < minNameLength
 
-        if (this.isInvalidName === true) {
-            name.classList.remove(inputValid)
-            name.classList.add(inputInvalid)
-            btnSave.setAttribute('disabled', true)
-            this.setData('name', name.value)
-            return
-        }
+        const name = nameValidator(this)
+        const form = bindElement(this)
+        const { name: inputName } = form
 
-        name.classList.remove(inputInvalid)
-        name.classList.add(inputValid)
-        this.setData('name', name.value)
-        if (this.isInvalidEmail === false && this.isInvalidName === false) {
-            btnSave.removeAttribute('disabled')
-        }
+        name.isValidInput()
+        .then( status => {
+            name.setStatusInput(status)
+        })
+        .then(() => {
+            return name.isValidForm()
+        })
+        .then(status => {
+            name.setStatusForm(status)
+            this.setData('name', inputName.value)
+        })
     }
 
     emailValidate(e) {
-        const { email, btnSave } = bindElement(this)
-        const { value } = e.target
-        const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-        this.isInvalidEmail = reg.test(email.value) !== true
 
-        if (this.isInvalidEmail === true) {
-            email.classList.remove('input--valid')
-            email.classList.add('input--invalid')
+        const email = emailValidator(this)
+        const form = bindElement(this)
+        const {email: inputEmail } = form
+
+        email.isValidInput()
+        .then( status => {
+            email.setStatusInput(status)
+        })
+        .then(() => {
+            return email.isValidForm()
+        })
+        .then(status => {
+            email.setStatusForm(status)
+            this.setData('email', inputEmail.value)
+        })
+
+
+    }
+
+    validateForm() {
+        event.subscribe('onFormChange', data => {
+            const { btnSave } = bindElement(this)
+            if(data && data.status) {
+                btnSave.removeAttribute('disabled')
+                return
+            }
             btnSave.setAttribute('disabled', true)
-            this.setData('email', email.value)
-            return
-        }
-
-        email.classList.remove('input--invalid')
-        email.classList.add('input--valid')
-        this.setData('email', email.value)
-        if (this.isInvalidEmail === false && this.isInvalidName === false) {
-            btnSave.removeAttribute('disabled')
-        }
-
+        })
     }
 
     idGenerator() {
