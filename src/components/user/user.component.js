@@ -20,6 +20,7 @@ export default class Form extends Component {
         e.preventDefault()
         const {userId} = e.target.dataset
         this.store.dispatch('clearItem', { id: userId })
+        event.publish('removeItem', { userId })
     }
 
     render(state, actions, mutations) {
