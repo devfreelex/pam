@@ -13,7 +13,6 @@ export default class Form extends Component {
         this.store = store
         this.isInvalidName
         this.isInvalidEmail
-        this.bindForm = 0
         this.update()
         this.showRegister()
         this.validateForm()
@@ -23,19 +22,29 @@ export default class Form extends Component {
         event.subscribe('editUser', data => {
             const { users } = this.store.state
             const { name, email } = bindElement(this)
+
             const user = users.find(user => {
                 if (user._id === parseInt(data.userId)) {
                     return user
                 }
             })
-            email.value = user.email
-            name.value = user.name
+
             this.user = user
+            email.value = this.user.email
+            name.value = this.user.name
+        })
+
+        event.subscribe('removeItem', (data) => {
+            const { name, email } = bindElement(this)
+            if (this.user && (parseInt(data.userId) === this.user._id)) {
+                delete this.user
+                this.resetForm(name, email)
+            }
         })
     }
 
-    resetForm (name, email) {
-        
+    resetForm(name, email) {
+
         this.isFormValid = false
         this.isNameValid = false
         this.isEmailValid = false
@@ -62,25 +71,26 @@ export default class Form extends Component {
 
     toggleRegister(e) {
         e.preventDefault()
+
+        const { name, email } = bindElement(this)
+        if (this.user && this.user._id) {
+            this.resetForm(name, email)
+            return
+        }
+
         const toggleClass = 'register--hidden'
         const { form } = bindElement(this)
-        this.bindForm = this.bindForm + 1
         form.classList.toggle(toggleClass)
+
     }
 
     showRegister() {
         event.subscribe('editUser', () => {
             const showClass = 'register--hidden'
             const { form } = bindElement(this)
-            if (this.bindForm < 1) {
-                this.bindForm = this.bindForm + 1
-                if (form.classList.contains(showClass)) {
-                    form.classList.remove(showClass)
-                }
+            if (form.classList.contains(showClass)) {
+                form.classList.remove(showClass)
             }
-            setTimeout(() => {
-                this.bindForm = 0
-            }, 100)
         })
     }
 
@@ -97,35 +107,35 @@ export default class Form extends Component {
         const { name: inputName } = form
 
         name.isValidInput()
-        .then( status => {
-            name.setStatusInput(status)
-        })
-        .then(() => {
-            return name.isValidForm()
-        })
-        .then(status => {
-            name.setStatusForm(status)
-            this.setData('name', inputName.value)
-        })
+            .then(status => {
+                name.setStatusInput(status)
+            })
+            .then(() => {
+                return name.isValidForm()
+            })
+            .then(status => {
+                name.setStatusForm(status)
+                this.setData('name', inputName.value)
+            })
     }
 
     emailValidate(e) {
 
         const email = emailValidator(this)
         const form = bindElement(this)
-        const {email: inputEmail } = form
+        const { email: inputEmail } = form
 
         email.isValidInput()
-        .then( status => {
-            email.setStatusInput(status)
-        })
-        .then(() => {
-            return email.isValidForm()
-        })
-        .then(status => {
-            email.setStatusForm(status)
-            this.setData('email', inputEmail.value)
-        })
+            .then(status => {
+                email.setStatusInput(status)
+            })
+            .then(() => {
+                return email.isValidForm()
+            })
+            .then(status => {
+                email.setStatusForm(status)
+                this.setData('email', inputEmail.value)
+            })
 
 
     }
@@ -133,7 +143,7 @@ export default class Form extends Component {
     validateForm() {
         event.subscribe('onFormChange', data => {
             const { btnSave } = bindElement(this)
-            if(data && data.status) {
+            if (data && data.status) {
                 btnSave.removeAttribute('disabled')
                 return
             }
